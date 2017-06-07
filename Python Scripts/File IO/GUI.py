@@ -10,7 +10,8 @@ from PyQt5.QtWidgets import QFileDialog, QLineEdit
 import resource_rc 
 
 
-
+filename = ''
+flag = 0
 
 class Ui_Dialog(object):
     
@@ -44,15 +45,11 @@ class Ui_Dialog(object):
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 3, 0, 1, 2)
-        
-        
-        #################### BUTTON ACTION #########################
+        #################### BUTTON ACTION #########################################################
         self.BrowseButton.clicked.connect(self.BrowseFunction) 
-        self.filename = ''
         QLineEdit.setPlaceholderText(self.lineEdit, "Search for the file using the 'Browse' button")
         QLineEdit.setReadOnly (self.lineEdit, True)
-        ############################################################
-
+        ############################################################################################
         self.retranslateUi(Dialog)
         self.OKbuttonBox.accepted.connect(Dialog.accept)
         self.OKbuttonBox.accepted.connect(self.OKbuttonAccepted)
@@ -70,10 +67,12 @@ class Ui_Dialog(object):
         QLineEdit.setText(self.lineEdit, self.buffer)
         
     def OKbuttonAccepted(self):
-        self.filename = self.buffer
-        print(self.filename)
-
-
+        global filename
+        global flag
+        flag = 1
+        filename = self.buffer
+        
+        
     
 if __name__ == "__main__":
     import sys
@@ -82,37 +81,42 @@ if __name__ == "__main__":
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()
- 
+    app.aboutToQuit.connect(app.deleteLater)
+    
+
+   
+while(flag == 0):
+    QtCore.QCoreApplication.processEvents() 
     
     
-#    print("\n")
-#    txt = open(self.filename,"r")
-#    values = txt.readlines()
-#
-#    new_values = [None] * 13      
-#    numbers = [None] * 13
-#    
-#    for i in range(len(values)):
-#        
-#        for index, char in enumerate(values[i]):
-#    
-#            if i < 12:
-#                if char == '0' and index > 2:
-#                    
-#                    new_values[i] = values[i][index:-1]
-#                
-#                    break
-#            else: 
-#                if char == '0' and index > 2:
-#                
-#                    new_values[i] = values[i][index:]
-#                
-#                    break
-#            
-#    for i in range(len(new_values)):
-#        
-#        numbers[i] = int(new_values[i], 16)
-#        
-#        
-#    for i in range(len(numbers)):
-#        print(hex(numbers[i]))
+txt = open(filename,"r")
+
+values = txt.readlines()
+
+new_values = [None] * 13      
+numbers = [None] * 13
+
+for i in range(len(values)):
+    
+    for index, char in enumerate(values[i]):
+
+        if i < 12:
+            if char == '0' and index > 2:
+                
+                new_values[i] = values[i][index:-1]
+            
+                break
+        else: 
+            if char == '0' and index > 2:
+            
+                new_values[i] = values[i][index:]
+            
+                break
+        
+for i in range(len(new_values)):
+    
+    numbers[i] = int(new_values[i], 16)
+    
+    
+for i in range(len(numbers)):
+    print(hex(numbers[i]))
