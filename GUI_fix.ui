@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>236</height>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,17 +22,21 @@ background-color: rgb(255, 255, 255);
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="0">
-    <widget class="QLineEdit" name="lineEdit"/>
+   <item row="5" column="0">
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="placeholderText">
+      <string>Use the 'Browse' button to search for the desired register file</string>
+     </property>
+    </widget>
    </item>
-   <item row="4" column="1">
+   <item row="5" column="1">
     <widget class="QPushButton" name="BrowseButton">
      <property name="text">
       <string>Browse</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="2">
+   <item row="6" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="OKbuttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -67,6 +71,26 @@ background-color: rgb(255, 255, 255);
      </property>
      <property name="wordWrap">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLineEdit" name="IPlineEdit">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="placeholderText">
+      <string>Enter the IP address of the desired server then hit 'Confirm'</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="ConfirmButton">
+     <property name="text">
+      <string>Confirm</string>
      </property>
     </widget>
    </item>
