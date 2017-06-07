@@ -120,3 +120,11 @@ for i in range(len(new_values)):
     
 for i in range(len(numbers)):
     print(hex(numbers[i]))
+    
+    
+    
+    
+    
+    
+    
+    
