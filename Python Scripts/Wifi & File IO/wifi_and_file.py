@@ -8,6 +8,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QLineEdit
 import resource_rc 
+import socket 
 
 
 filename = ''
@@ -138,17 +139,30 @@ for i in range(len(values)):
                 break
         
 for i in range(len(new_values)):
-    
     numbers[i] = int(new_values[i], 16)
     
     
-for i in range(len(numbers)):
-    print(hex(numbers[i]))
+host_ip = IPaddress
+
+port = 5555
+
+s = socket.socket()
+
+s.connect((host_ip, port))
+
+
+
+for x in range(0,13):
+    new_values[x] = new_values[x] + " "
+      
     
+i = 0
+
+while i < 13: 
+   s.send(new_values[i].encode('utf-8'))
+   i += 1
+  
     
-    
-    
-    
-    
-    
+   
+s.close()    
     
