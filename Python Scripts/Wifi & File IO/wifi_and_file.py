@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 '''
  Author: Mason Edgar
  Supervisor: John Sochacki 
@@ -9,6 +8,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QLineEdit
 import resource_rc 
+import socket 
 
 
 filename = ''
@@ -68,48 +68,6 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.OKbuttonBox.accepted.connect(Dialog.accept)
         self.OKbuttonBox.accepted.connect(self.OKbuttonAccepted)
-=======
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'GUI.ui'
-#
-# Created by: PyQt5 UI code generator 5.6
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
-
-
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(405, 194)
-        self.OKbuttonBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.OKbuttonBox.setGeometry(QtCore.QRect(40, 160, 341, 32))
-        self.OKbuttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.OKbuttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.OKbuttonBox.setObjectName("OKbuttonBox")
-        self.lineEdit = QtWidgets.QLineEdit(Dialog)
-        self.lineEdit.setGeometry(QtCore.QRect(20, 80, 261, 31))
-        self.lineEdit.setObjectName("lineEdit")
-        self.BrowseButton = QtWidgets.QPushButton(Dialog)
-        self.BrowseButton.setGeometry(QtCore.QRect(290, 80, 93, 28))
-        self.BrowseButton.setObjectName("BrowseButton")
-        #################### BUTTON ACTION #########################
-        self.BrowseButton.clicked.connect(self.BrowseFunction) 
-        self.filename = ''
-        ############################################################
-        self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(20, 30, 421, 21))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-
-        self.retranslateUi(Dialog)
-        self.OKbuttonBox.accepted.connect(Dialog.accept)
->>>>>>> master
         self.OKbuttonBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
@@ -118,7 +76,6 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Wifi Module"))
         self.lineEdit.setPlaceholderText(_translate("Dialog", "Use the \'Browse\' button to search for the desired register file"))
         self.BrowseButton.setText(_translate("Dialog", "Browse"))
-<<<<<<< HEAD
         self.label.setText(_translate("Dialog", "<html><head/><body><p><img src=\":/img/0ed03b37.png\"/></p><p><span style=\" font-weight:600;\">Wifi Programmable Frequency Synthesizer Module</span></p></body></html>"))
         self.IPlineEdit.setPlaceholderText(_translate("Dialog", "Enter the IP address of the desired server then hit \'Confirm\'"))
         self.ConfirmButton.setText(_translate("Dialog", "Confirm"))
@@ -142,18 +99,6 @@ class Ui_Dialog(object):
         
         
     
-=======
-        self.label.setText(_translate("Dialog", "Wifi Programmable Frequency Synthesizer Module"))
-               
-        
-    def BrowseFunction(self):
-        self.filename, _ = QFileDialog.getOpenFileName(None,"Open File","","Text Files (*.txt);;All Files (*)", None)
-        
-
-    
-        
-
->>>>>>> master
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -161,7 +106,6 @@ if __name__ == "__main__":
     ui = Ui_Dialog()
     ui.setupUi(Dialog)
     Dialog.show()
-<<<<<<< HEAD
     app.aboutToQuit.connect(app.deleteLater)
     
 
@@ -195,53 +139,30 @@ for i in range(len(values)):
                 break
         
 for i in range(len(new_values)):
-    
     numbers[i] = int(new_values[i], 16)
     
     
-for i in range(len(numbers)):
-    print(hex(numbers[i]))
-    
-    
-    
-    
-    
-    
-    
-    
-=======
- 
-    
-    
-    print("\n")
-    txt = open(self.filename,"r")
-    values = txt.readlines()
+host_ip = IPaddress
 
-    new_values = [None] * 13      
-    numbers = [None] * 13
+port = 5555
+
+s = socket.socket()
+
+s.connect((host_ip, port))
+
+
+
+for x in range(0,13):
+    new_values[x] = new_values[x] + " "
+      
     
-    for i in range(len(values)):
-        
-        for index, char in enumerate(values[i]):
+i = 0
+
+while i < 13: 
+   s.send(new_values[i].encode('utf-8'))
+   i += 1
+  
     
-            if i < 12:
-                if char == '0' and index > 2:
-                    
-                    new_values[i] = values[i][index:-1]
-                
-                    break
-            else: 
-                if char == '0' and index > 2:
-                
-                    new_values[i] = values[i][index:]
-                
-                    break
-            
-    for i in range(len(new_values)):
-        
-        numbers[i] = int(new_values[i], 16)
-        
-        
-    for i in range(len(numbers)):
-        print(hex(numbers[i]))
->>>>>>> master
+   
+s.close()    
+    
