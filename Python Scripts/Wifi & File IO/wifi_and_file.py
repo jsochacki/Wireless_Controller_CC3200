@@ -14,26 +14,24 @@ import socket
 filename = ''
 flag = 0
 IPaddress = ''
+Port = ''
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(523, 296)
+        Dialog.resize(532, 296)
         Dialog.setAutoFillBackground(False)
         Dialog.setStyleSheet("QDialog{\n""background-color: rgb(255, 255, 255);\n""}")
         self.gridLayout = QtWidgets.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.lineEdit = QtWidgets.QLineEdit(Dialog)
-        self.lineEdit.setObjectName("lineEdit")
-        self.gridLayout.addWidget(self.lineEdit, 5, 0, 1, 1)
         self.BrowseButton = QtWidgets.QPushButton(Dialog)
         self.BrowseButton.setObjectName("BrowseButton")
-        self.gridLayout.addWidget(self.BrowseButton, 5, 1, 1, 1)
+        self.gridLayout.addWidget(self.BrowseButton, 5, 2, 1, 1)
         self.OKbuttonBox = QtWidgets.QDialogButtonBox(Dialog)
         self.OKbuttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.OKbuttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.OKbuttonBox.setObjectName("OKbuttonBox")
-        self.gridLayout.addWidget(self.OKbuttonBox, 6, 0, 1, 2)
+        self.gridLayout.addWidget(self.OKbuttonBox, 6, 0, 1, 3)
         self.label = QtWidgets.QLabel(Dialog)
         font = QtGui.QFont()
         font.setFamily("Cambria")
@@ -45,7 +43,7 @@ class Ui_Dialog(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 3, 0, 1, 2)
+        self.gridLayout.addWidget(self.label, 3, 0, 1, 3)
         self.IPlineEdit = QtWidgets.QLineEdit(Dialog)
         self.IPlineEdit.setStyleSheet("")
         self.IPlineEdit.setClearButtonEnabled(False)
@@ -53,7 +51,13 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.IPlineEdit, 4, 0, 1, 1)
         self.ConfirmButton = QtWidgets.QPushButton(Dialog)
         self.ConfirmButton.setObjectName("ConfirmButton")
-        self.gridLayout.addWidget(self.ConfirmButton, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.ConfirmButton, 4, 2, 1, 1)
+        self.PortEdit = QtWidgets.QLineEdit(Dialog)
+        self.PortEdit.setObjectName("PortEdit")
+        self.gridLayout.addWidget(self.PortEdit, 4, 1, 1, 1)
+        self.lineEdit = QtWidgets.QLineEdit(Dialog)
+        self.lineEdit.setObjectName("lineEdit")
+        self.gridLayout.addWidget(self.lineEdit, 5, 0, 1, 2)
         
         
         
@@ -74,11 +78,12 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Wifi Module"))
-        self.lineEdit.setPlaceholderText(_translate("Dialog", "Use the \'Browse\' button to search for the desired register file"))
         self.BrowseButton.setText(_translate("Dialog", "Browse"))
         self.label.setText(_translate("Dialog", "<html><head/><body><p><img src=\":/img/0ed03b37.png\"/></p><p><span style=\" font-weight:600;\">Wifi Programmable Frequency Synthesizer Module</span></p></body></html>"))
-        self.IPlineEdit.setPlaceholderText(_translate("Dialog", "Enter the IP address of the desired server then hit \'Confirm\'"))
+        self.IPlineEdit.setPlaceholderText(_translate("Dialog", "IP address of CC3200 server"))
         self.ConfirmButton.setText(_translate("Dialog", "Confirm"))
+        self.PortEdit.setPlaceholderText(_translate("Dialog", "Port number of CC3200 server"))
+        self.lineEdit.setPlaceholderText(_translate("Dialog", "Use the \'Browse\' button to search for the desired register file"))
                
     def BrowseFunction(self):
         self.buffer, _ = QFileDialog.getOpenFileName(None,"Open File","","Text Files (*.txt);;All Files (*)", None)
@@ -86,10 +91,14 @@ class Ui_Dialog(object):
        
     def ConfirmFunction(self):
         global IPaddress
+        global Port
         self.ConfirmButton.setText("Confirmed!")
         self.IPlineEdit.setStyleSheet("color: rgb(0, 170, 0);")
+        self.PortEdit.setStyleSheet("color: rgb(0, 170, 0);")
         IPaddress = QLineEdit.text(self.IPlineEdit)
+        Port = QLineEdit.text(self.PortEdit)
         QLineEdit.setReadOnly(self.IPlineEdit, True)
+        QLineEdit.setReadOnly(self.PortEdit, True)
     
     def OKbuttonAccepted(self):
         global filename
@@ -138,17 +147,17 @@ for i in range(len(values)):
             
                 break
         
-for i in range(len(new_values)):
-    numbers[i] = int(new_values[i], 16)
+#for i in range(len(new_values)):
+#    numbers[i] = int(new_values[i], 16)
     
     
 host_ip = IPaddress
 
-port = 5555
+port_number = int(Port)
 
 s = socket.socket()
 
-s.connect((host_ip, port))
+s.connect((host_ip, port_number))
 
 
 
